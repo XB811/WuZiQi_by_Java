@@ -2,6 +2,8 @@ package Java;
 
 import java.awt.*;
 import javax.swing.*;
+
+import Interface.config;
 import Listener.*;
 import java.lang.*;
 import java.text.DecimalFormat;

@@ -1,9 +1,11 @@
 package Listener;
 
 import Java.Pan;
-import Java.config;
+import Interface.config;
+import Java.Referee;
 import Java.robot;
 import Java.about;
+import Interface.referee;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -37,6 +39,7 @@ public class ButtonListener implements ActionListener, config {
     public void actionPerformed(ActionEvent e) {
         String ButtonString = e.getActionCommand();
         JButton bu = (JButton) e.getSource();
+        referee judge=new Referee();
         int n;
         //触发的按钮是哪一个
         //仅在模式1或者模式2时，这个监听器才会起作用
@@ -146,11 +149,14 @@ public class ButtonListener implements ActionListener, config {
                     flag[1]=2;
                 }
                 if(flag[1]==1&&(flag[2]==1||flag[2]==2)) {
-                    flag[0] = (flag[0] == 0) ? 1 : 0;
+                    judge.judge_and_output();
+                    flag[0] = (flag[0] == 0) ? 1 : 0;//切换玩家
                     flag[3]=0;//可以继续放棋子
-                    if(flag[2]==2) {
+                    //判断是否输赢
+                    if(flag[2]==2&&flag[1]==1) {//如果玩家胜利，停止游戏，这里用flag[1]限制电脑继续执行
                         if(ro==null)ro=new robot();
-                        ro.run();
+                        ro.run(p);
+                        judge.judge_and_output();
                     }
                 }
                 break;

@@ -1,5 +1,7 @@
 package Java;
 
+import Interface.config;
+
 import javax.swing.*;
 import java.awt.*;
 

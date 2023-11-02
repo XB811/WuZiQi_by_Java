@@ -17,7 +17,7 @@ public class about extends JFrame {
         s+="7、联机模式还没做\n";
         s+="\n\n";
         s+="               更新记录\n";
-        s+="v1.1:修复bug，添加判断平局功能，添加时间显示\n";
+        s+="v1.1:修复bug，添加判断平局功能，时间显示，人机对战功能\n";
         s+="v1.0：实现单机版五子棋基本功能\n";
         JTextArea jt=new JTextArea(s);
         jt.setLineWrap(true);

@@ -1,4 +1,4 @@
-package Java;
+package Interface;
 
 //接口，用于存储全局变量
 
