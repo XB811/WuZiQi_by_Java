@@ -1,9 +1,14 @@
+package Listener;
+
+import Java.Pan;
+import Java.config;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.*;
 
 //棋盘监听
-public class PanelListener implements MouseListener,config {
+public class PanelListener implements MouseListener, config {
     boolean judgment(int qx,int qy){
         //起始位置和终止位置，不能够越界
         int begin_x=Math.max(qx-4,1);

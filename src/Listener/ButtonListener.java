@@ -1,9 +1,14 @@
+package Listener;
+
+import Java.Pan;
+import Java.config;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //按键监听
-public class ButtonListener implements ActionListener,config {
+public class ButtonListener implements ActionListener, config {
     Pan p;
     private int fl=0;
     about About=null;

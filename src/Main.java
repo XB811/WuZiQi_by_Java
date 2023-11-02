@@ -1,3 +1,5 @@
+import Java.GUI;
+
 //主函数
 //调用产生棋盘窗口
 public class Main {

@@ -1,8 +1,10 @@
+package Java;
+
 import javax.swing.*;
 import java.awt.*;
 
 //画笔，负责绘制棋盘和棋子
-public class Pan extends JPanel implements config{
+public class Pan extends JPanel implements config {
 
     @Override
     public void paint(Graphics g) {
@@ -28,12 +30,12 @@ public class Pan extends JPanel implements config{
             {
                 int x=i*40-15;
                 int y=j*40-15;
-                if(chess[i][j]==1)
+                if(config.chess[i][j]==1)
                 {
                     g.setColor(new Color(0,0,0));
                     g.fillOval(x,y,30,30);
                 }
-                else if(chess[i][j]==2)
+                else if(config.chess[i][j]==2)
                 {
                     g.setColor(new Color(255,255,255));
                     g.fillOval(x,y,30,30);

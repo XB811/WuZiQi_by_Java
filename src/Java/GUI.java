@@ -1,12 +1,14 @@
+package Java;
+
 import java.awt.*;
 import javax.swing.*;
-
-public class GUI extends JFrame implements config{
+import Listener.*;
+public class GUI extends JFrame implements config {
     public GUI()
     {
         //重置标签
-        flag[0]=0;
-        flag[1]=0;
+        config.flag[0]=0;
+        config.flag[1]=0;
         //设置窗口布局为空，直接使用坐标放置容器
         setLayout(null);
         //棋盘组件
@@ -22,7 +24,7 @@ public class GUI extends JFrame implements config{
 
 
         for(int i=0;i<6;i++){
-            jb[i]=new JButton(ButtonName[i]);
+            jb[i]=new JButton(config.ButtonName[i]);
             jb[i].addActionListener(new ButtonListener(p));
             jb[i].setBounds(800,120+i*80,200,80);
             jb[i].setFont(new Font("宋体", Font.BOLD, 30));
