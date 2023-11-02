@@ -2,6 +2,8 @@ package Listener;
 
 import Java.Pan;
 import Java.config;
+import Java.robot;
+import Java.about;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,27 +36,64 @@ public class ButtonListener implements ActionListener, config {
     @Override
     public void actionPerformed(ActionEvent e) {
         String ButtonString = e.getActionCommand();
+        JButton bu = (JButton) e.getSource();
         int n;
         //触发的按钮是哪一个
+        //仅在模式1或者模式2时，这个监听器才会起作用
         switch (ButtonString) {
+
             case "开始游戏":
-                JButton bu = (JButton) e.getSource();
-                bu.setText("重新开始");
-                init();
-                break;
             case "重新开始":
-                flag[1]=0;//暂停游戏
-                n=JOptionPane.showConfirmDialog(null,"确认要重新开始游戏吗？","重新开始游戏",JOptionPane.YES_NO_OPTION);
-                if(n==JOptionPane.YES_OPTION) {
-                    init();
-                }
-                else{
-                    flag[1]=2;//表示是未重新开始游戏，而是暂停后开始的游戏，用于计时器
+                if(flag[2]==0)JOptionPane.showMessageDialog(null,"请先选择游戏模式","警告",JOptionPane.WARNING_MESSAGE);
+                else if(flag[2]==1||flag[2]==2){
+                    bu.setText("退出本局游戏");
+                    init();//初始化，开始游戏
                 }
                 break;
+            case "退出本局游戏":
+                if(flag[2]==1||flag[2]==2) {
+                    flag[1] = 0;//暂停游戏
+                    n = JOptionPane.showConfirmDialog(null, "确认要退出本局游戏吗？", "退出本局游戏", JOptionPane.YES_NO_OPTION);
+                    if (n == JOptionPane.YES_OPTION) {
+                        flag[2]=0;  //恢复的选择模式
+                        bu.setText("重新开始");
+                    } else {
+                        flag[1] = 2;//表示是未重新开始游戏，而是暂停后继续的游戏，用于计时器
+                    }
+                }
+                break;
+            case "选择游戏模式":
+                if(flag[1]==1)JOptionPane.showMessageDialog(null,"正在下棋，请勿更改游戏模式","警告",JOptionPane.WARNING_MESSAGE);
+                else {
+                    flag[2] = 1;
+                    bu.setText("双人模式");
+                }
+                break;
+            case "双人模式":
+                if(flag[1]==1)JOptionPane.showMessageDialog(null,"正在下棋，请勿更改游戏模式","警告",JOptionPane.WARNING_MESSAGE);
+                else {
+                    bu.setText("人机模式");
+                    flag[2] = 2;
+                }
+                break;
+            case "人机模式":
+                if(flag[1]==1)JOptionPane.showMessageDialog(null,"正在下棋，请勿更改游戏模式","警告",JOptionPane.WARNING_MESSAGE);
+                else {
+                    bu.setText("联网模式");
+                    flag[2] = 3;
+                    //联机模式还没有做这里可能还会更改
+                }
+                break;
+            case "联网模式"://联网模式还没做，可能后面这一部分会挪走
+                if(flag[1]==1)JOptionPane.showMessageDialog(null,"正在下棋，请勿更改游戏模式","警告",JOptionPane.WARNING_MESSAGE);
+                else {
+                    bu.setText("选择游戏模式");
+                    flag[2] = 0;
+                }
             case"悔棋":
-                //前提必须是已经开始游戏
-                if(flag[1]==1) {
+                //前提必须是已经开始游戏且为模式1，确认后模式2会电脑自动操作，无法悔棋、
+                //必须无未确认棋子
+                if(flag[1]==1&&flag[2]==1&&flag[3]==0) {
                     if ( location[0] == 0 && location[1] == 0) {
                         flag[1]=0;
                         JOptionPane.showMessageDialog(null, "你还没有下棋", "警告", JOptionPane.WARNING_MESSAGE);
@@ -64,25 +103,44 @@ public class ButtonListener implements ActionListener, config {
                         JOptionPane.showMessageDialog(null,"只能撤销一步操作","警告",JOptionPane.WARNING_MESSAGE);
                         flag[1]=2;
                     }
-                    else if(huiqi[0]==(flag[0]==0?2:1)&&huiqi[1]==1) {
+                    else if(huiqi[0]==(flag[0]==0?2:1)&&huiqi[1]==1) {//如果本次悔棋者和上一次悔棋者是同一个人，且操作间隔只有一步，则禁止悔棋
                         flag[1]=0;
-                        JOptionPane.showMessageDialog(null,"只有一次悔棋机会");
+                        JOptionPane.showMessageDialog(null,"只有一次悔棋机会","警告",JOptionPane.WARNING_MESSAGE);
                         flag[1]=2;
                     }
                     else{
                         flag[0]=(flag[0]==1)?0:1;//切换选手
                         chess[location[0]][location[1]] = 0;
-                        location[0]=18;
+                        location[0]=18;//用于连续撤回几次操作
                         location[1]=18;
-                        huiqi[0]=flag[0]+1;
-                        huiqi[1]=0;
+                        huiqi[0]=flag[0]+1;//悔棋成功后记录悔棋者
+                        huiqi[1]=0;//初始化距离上次悔棋的步数
                         p.repaint();
                     }
+                } else if (flag[1]==1&&(flag[2]==1||flag[2]==2)&&flag[3]==1) {//未确认前，也可以使用悔棋键撤销操作
+                    chess[location[0]][location[1]]=0;
+                    flag[3]=0;
+                    p.repaint();
+                    return;
                 }
-
+                break;
+            case "确认棋位":
+                if(flag[3]==0){
+                    flag[1]=0;
+                    JOptionPane.showMessageDialog(null,"你还未放棋");
+                    flag[1]=2;
+                }
+                if(flag[1]==1&&(flag[2]==1||flag[2]==2)) {
+                    flag[0] = (flag[0] == 0) ? 1 : 0;
+                    flag[3]=0;//可以继续放棋子
+                    if(flag[2]==2) {
+                        robot ro = new robot();
+                        ro.run();
+                    }
+                }
                 break;
             case "认输":
-                if(flag[1]==1) {
+                if(flag[1]==1&&(flag[2]==1||flag[2]==2)) {
                     flag[1]=0;
                     n = JOptionPane.showConfirmDialog(null, "当前轮到"+(flag[0]==0?"黑":"白")+"棋下棋，你确认放弃游戏吗？", "认输", JOptionPane.YES_NO_OPTION);
                     if (n == JOptionPane.YES_OPTION) {
@@ -104,13 +162,13 @@ public class ButtonListener implements ActionListener, config {
                 }
                 break;
             case "退出":
-                if(flag[1]==0) {
+                if(flag[1]==0) {//不在游戏中
                     n = JOptionPane.showConfirmDialog(null, "要退出游戏吗？", "退出游戏", JOptionPane.YES_NO_OPTION);
                     if (n == JOptionPane.YES_OPTION) {
                         System.exit(0);
                     }
                 }
-                else{
+                else if(flag[2]==1||flag[2]==2){//在模式1或者模式2
                     flag[1]=0;
                     n = JOptionPane.showConfirmDialog(null, "要退出游戏吗？", "退出游戏", JOptionPane.YES_NO_OPTION);
                     if (n == JOptionPane.YES_OPTION) {
@@ -119,46 +177,9 @@ public class ButtonListener implements ActionListener, config {
                     else
                         flag[1]=2;
                 }
-
                 break;
-
-
         }
     }
 
 }
-class about extends JFrame{
-    public about()
-    {
-        String s="";
-        s+="规则：\n";
-        s+="1、点击“开始游戏”/“重新开始”后，才可以进行游戏。\n";
-        s+="2、黑方先下，轮流落子。\n";
-        s+="3、每一方将自己的棋子放在棋盘的任意交叉点上，一次只能下一个棋子。\n";
-        s+="4、先在棋盘上形成五个相同颜色的棋子连成一条线（横、竖、斜线皆可）的一方获胜。\n";
-        s+="5、悔棋只能够悔一次.\n";
-        s+="\n\n";
-        s+="               更新记录\n";
-        s+="v1.1:修复bug，添加判断平局功能\n";
-        s+="v1.0：实现单机版五子棋基本功能\n";
-        JTextArea jt=new JTextArea(s);
-        jt.setLineWrap(true);
-        jt.setEditable(false);
-        jt.setLayout(new FlowLayout());
-        jt.setPreferredSize(new Dimension(400,500));
-        jt.setFont(new Font("宋体", Font.BOLD, 18));
-        add(jt);
-        init();
-    }
-    private void init()
-    {
-        setResizable(false);      //禁止窗口拉伸
-        setTitle("规则&关于");     //窗口名字
-        Image icon=Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png"));
-        setIconImage(icon);     //图标
-        setSize(400,500);      //窗口尺寸
-        setVisible(true);           //窗口可见
-        setLocationRelativeTo(null);        //窗口居中
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);  //按下关闭按钮后退出程序
-    }
-}
+

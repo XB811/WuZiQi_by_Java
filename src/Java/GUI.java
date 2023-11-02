@@ -23,7 +23,7 @@ public class GUI extends JFrame implements config {
         JPanel panel=new JPanel();
         panel.setBackground(new Color(255,255,255));
         panel.setBounds(800,0,200,800);
-        JButton []jb=new JButton[6];
+        JButton []jb=new JButton[7];
 
         //计时器面板
         JTextArea []jta=new JTextArea[2];
@@ -37,20 +37,22 @@ public class GUI extends JFrame implements config {
             add(jta[i]);
         }
 
-        for(int i=0;i<6;i++){
+        for(int i=0;i<7;i++){
             jb[i]=new JButton(config.ButtonName[i]);
             jb[i].addActionListener(new ButtonListener(p));
             jb[i].setBounds(800,120+i*80,200,80);
-            jb[i].setFont(new Font("宋体", Font.BOLD, 30));
+            jb[i].setFont(new Font("宋体", Font.BOLD, 24));
             add(jb[i]);
         }
 
         add(panel);
         add(p);
         init();
-        timerAdd(jta);
+        new about();
+        timerAdd(jta,jb[1]);
     }
-    private void timerAdd(JTextArea []jta){
+    //计时器
+    private void timerAdd(JTextArea []jta,JButton jb){
         int []last_flag=new int[2];//表示上次玩家和上次的是否开始游戏
         last_flag[0]=1;
         //last_flag[1]=0;
@@ -69,8 +71,8 @@ public class GUI extends JFrame implements config {
                     totaltime=x-last_time[1];
                 }
             }
-            else{
-                if(flag[1]==1)//表示开始游戏
+            else{   //flag[1]发生变化的情况
+                if(flag[1]==1)//表示开始游戏，初始化数组
                 {
                     last_time[1]=x;
                     totaltime=System.currentTimeMillis()-last_time[1];
@@ -79,10 +81,10 @@ public class GUI extends JFrame implements config {
                     player_compensate_time=0;
                     last_flag[0]=1;//把上一次玩家置为白棋，让计时器初始化
                 }
-                else if(flag[1]==2) {//暂停游戏后开始
+                else if(flag[1]==2) {//暂停游戏后开始，避免初始化
                     flag[1]=1;
-                    totaltime=x-last_time[1];
-                    compensate_time+=x-last_time[2];
+                    totaltime=x-last_time[1];//避免重置上一次开始游戏的时间点
+                    compensate_time+=x-last_time[2];//补偿时间
                     last_flag[1]=1;
                 }
                 else{   //暂停游戏
@@ -117,8 +119,11 @@ public class GUI extends JFrame implements config {
             time_string[0]="剩余时长："+d1.format(playertime/60000)+':'+d1.format((playertime%60000)/1000)+':'+d2.format(playertime%1000);
             jta[1].setText(time_string[0]);
             jta[0].setText(time_string[1]);
+            if(flag[2]==0&&!jb.getText().equals("选择游戏模式"))//重新开始游戏后，需要再次选择模式
+                jb.setText("选择游戏模式");
 
         }
+
     }
     private void init()
     {
@@ -130,6 +135,7 @@ public class GUI extends JFrame implements config {
         setVisible(true);           //窗口可见
         setLocationRelativeTo(null);        //窗口居中
         setDefaultCloseOperation(EXIT_ON_CLOSE);  //按下关闭按钮后退出程序
+
     }
 }
 
