@@ -126,7 +126,7 @@ class about extends JFrame{
     {
         setResizable(false);      //禁止窗口拉伸
         setTitle("规则&关于");     //窗口名字
-        Image icon=Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
+        Image icon=Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png"));
         setIconImage(icon);     //图标
         setSize(400,500);      //窗口尺寸
         setVisible(true);           //窗口可见

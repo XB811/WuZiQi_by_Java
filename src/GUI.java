@@ -37,7 +37,7 @@ public class GUI extends JFrame implements config{
     {
         setResizable(false);        //禁止窗口拉伸
         setTitle("单机版五子棋");     //窗口名字
-        Image icon=Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png"));
+        Image icon=Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/icon.png"));
         setIconImage(icon);     //图标
         setSize(1016,840);      //窗口尺寸
         setVisible(true);           //窗口可见
