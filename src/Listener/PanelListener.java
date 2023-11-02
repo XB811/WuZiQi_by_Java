@@ -90,6 +90,7 @@ public class PanelListener implements MouseListener, config {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        if(flag[2]==3)return;//联网模式不执行
         Pan p=(Pan)e.getSource();
         if(flag[1]==1&&e.getX()>=20&&e.getX()<700&&e.getY()>=20&&e.getY()<700)
         {
