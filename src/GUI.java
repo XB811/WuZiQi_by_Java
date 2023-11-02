@@ -18,13 +18,13 @@ public class GUI extends JFrame implements config{
         JPanel panel=new JPanel();
         panel.setBackground(new Color(255,255,255));
         panel.setBounds(800,0,200,800);
-        JButton []jb=new JButton[5];
+        JButton []jb=new JButton[6];
 
 
-        for(int i=0;i<5;i++){
+        for(int i=0;i<6;i++){
             jb[i]=new JButton(ButtonName[i]);
             jb[i].addActionListener(new ButtonListener(p));
-            jb[i].setBounds(800,120+i*120,200,80);
+            jb[i].setBounds(800,120+i*80,200,80);
             jb[i].setFont(new Font("宋体", Font.BOLD, 30));
             add(jb[i]);
         }
