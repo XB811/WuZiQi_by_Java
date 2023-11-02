@@ -82,11 +82,7 @@ public class robot implements config {
         {
             if(wz1 != null){
                 return wz1;
-            }else if(wz2 != null){
-                return wz2;
-            }else{
-                return null;
-            }
+            }else return wz2;
         }
 //		上下
         count = 1;
@@ -158,11 +154,7 @@ public class robot implements config {
         {
             if(wz1 != null){
                 return wz1;
-            }else if(wz2 != null){
-                return wz2;
-            }else{
-                return null;
-            }
+            }else return wz2;
         }
 //		左下右上
         return null;

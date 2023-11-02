@@ -63,7 +63,7 @@ public class GUI extends JFrame implements config {
         long compensate_time=0;//总游戏的时间补偿
         long player_compensate_time=0;//切换玩家时，不再需要加上之前的时间补偿
         long playertime=60000;
-        while(true){
+        while(true){   //计时器以及复原模式选择按钮
             long x=System.currentTimeMillis();
             //总时间计数
             if(last_flag[1]==flag[1])
