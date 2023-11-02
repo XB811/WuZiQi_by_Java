@@ -2,8 +2,6 @@ package Java;
 
 //接口，用于存储全局变量
 
-import javax.swing.*;
-
 public interface   config{
     int [][]chess=new int[20][20];  //存储棋子，1为黑棋，2为白棋，0为空
     int []flag=new int[2];//flag[0]表示该哪位选手下棋，默认为0（黑棋），flag[1]表示是否能够开始游戏 默认为0，不能开始游戏,1为新开游戏，2为继续游戏

@@ -47,8 +47,8 @@ public class GUI extends JFrame implements config {
     }
     private void jishi(JTextArea []jta){
         int []last_flag=new int[2];//表示上次玩家和上次的是否开始游戏
-        last_flag[0]=0;
-        last_flag[1]=0;
+        //last_flag[0]=0;
+        //last_flag[1]=0;
         long []last_time=new long[2];//记录上一次切换玩家和上一次开始游戏
         long totaltime=0;
         while(true){
