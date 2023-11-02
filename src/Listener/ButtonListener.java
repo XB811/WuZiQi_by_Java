@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //按键监听
 public class ButtonListener implements ActionListener, config {
+    robot ro =null;//机器人对象，人机模式调用
     Pan p;
     private int fl=0;
     about About=null;
@@ -148,7 +149,7 @@ public class ButtonListener implements ActionListener, config {
                     flag[0] = (flag[0] == 0) ? 1 : 0;
                     flag[3]=0;//可以继续放棋子
                     if(flag[2]==2) {
-                        robot ro = new robot();
+                        if(ro==null)ro=new robot();
                         ro.run();
                     }
                 }
