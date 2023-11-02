@@ -48,15 +48,16 @@ public class GUI extends JFrame implements config {
         add(panel);
         add(p);
         init();
-        jishi(jta);
+        timerAdd(jta);
     }
-    private void jishi(JTextArea []jta){
+    private void timerAdd(JTextArea []jta){
         int []last_flag=new int[2];//表示上次玩家和上次的是否开始游戏
         last_flag[0]=1;
         //last_flag[1]=0;
         long []last_time=new long[3];//记录上一次切换玩家,上一次开始游戏,上一次暂停游戏
         long totaltime=0;
-        long compensate_time=0;
+        long compensate_time=0;//总游戏的时间补偿
+        long player_compensate_time=0;//切换玩家时，不再需要加上之前的时间补偿
         long playertime=60000;
         while(true){
             long x=System.currentTimeMillis();
@@ -75,6 +76,7 @@ public class GUI extends JFrame implements config {
                     totaltime=System.currentTimeMillis()-last_time[1];
                     last_flag[1]=1;
                     compensate_time=0;//重新开始游戏，则补偿时间要置零
+                    player_compensate_time=0;
                     last_flag[0]=1;//把上一次玩家置为白棋，让计时器初始化
                 }
                 else if(flag[1]==2) {//暂停游戏后开始
@@ -96,10 +98,11 @@ public class GUI extends JFrame implements config {
                     last_time[0] = System.currentTimeMillis();
                     playertime = 60000 - (System.currentTimeMillis() - last_time[0]);
                     last_flag[0] = flag[0];
+                    player_compensate_time=compensate_time;//如果切换玩家，则不需要在加上之前的时间补偿
                 }
                 //时间补偿,游戏运行时，totaltime和playertime是根据系统时间实时计算的，多算了暂停的时间，但是系统暂停时，显示的是暂停前存储的数据
                 totaltime-=compensate_time;
-                playertime+=compensate_time;
+                playertime+=compensate_time-player_compensate_time;//有bug
             }
 
 
