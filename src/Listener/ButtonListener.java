@@ -31,7 +31,6 @@ public class ButtonListener implements ActionListener, config {
         p.repaint();
 
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         String ButtonString = e.getActionCommand();
@@ -44,21 +43,31 @@ public class ButtonListener implements ActionListener, config {
                 init();
                 break;
             case "重新开始":
+                flag[1]=0;//暂停游戏
                 n=JOptionPane.showConfirmDialog(null,"确认要重新开始游戏吗？","重新开始游戏",JOptionPane.YES_NO_OPTION);
                 if(n==JOptionPane.YES_OPTION) {
                     init();
+                }
+                else{
+                    flag[1]=2;//表示是未重新开始游戏，而是暂停后开始的游戏，用于计时器
                 }
                 break;
             case"悔棋":
                 //前提必须是已经开始游戏
                 if(flag[1]==1) {
                     if ( location[0] == 0 && location[1] == 0) {
+                        flag[1]=0;
                         JOptionPane.showMessageDialog(null, "你还没有下棋", "警告", JOptionPane.WARNING_MESSAGE);
+                        flag[1]=2;
                     } else  if(location[0]==18&&location[1]==18) {
+                        flag[1]=0;
                         JOptionPane.showMessageDialog(null,"只能撤销一步操作","警告",JOptionPane.WARNING_MESSAGE);
+                        flag[1]=2;
                     }
                     else if(huiqi[0]==(flag[0]==0?2:1)&&huiqi[1]==1) {
+                        flag[1]=0;
                         JOptionPane.showMessageDialog(null,"只有一次悔棋机会");
+                        flag[1]=2;
                     }
                     else{
                         flag[0]=(flag[0]==1)?0:1;//切换选手
@@ -74,11 +83,14 @@ public class ButtonListener implements ActionListener, config {
                 break;
             case "认输":
                 if(flag[1]==1) {
+                    flag[1]=0;
                     n = JOptionPane.showConfirmDialog(null, "当前轮到"+(flag[0]==0?"黑":"白")+"棋下棋，你确认放弃游戏吗？", "认输", JOptionPane.YES_NO_OPTION);
                     if (n == JOptionPane.YES_OPTION) {
                         JOptionPane.showMessageDialog(null,(flag[0]==0?"白":"黑")+"棋获胜");
                         flag[1]=0;
                     }
+                    else
+                        flag[1]=2;
                 }
                 break;
             case "规则&关于":
@@ -92,11 +104,22 @@ public class ButtonListener implements ActionListener, config {
                 }
                 break;
             case "退出":
-                n=JOptionPane.showConfirmDialog(null,"要退出游戏吗？","退出游戏",JOptionPane.YES_NO_OPTION);
-                if(n==JOptionPane.YES_OPTION)
-                {
-                    System.exit(0);
+                if(flag[1]==0) {
+                    n = JOptionPane.showConfirmDialog(null, "要退出游戏吗？", "退出游戏", JOptionPane.YES_NO_OPTION);
+                    if (n == JOptionPane.YES_OPTION) {
+                        System.exit(0);
+                    }
                 }
+                else{
+                    flag[1]=0;
+                    n = JOptionPane.showConfirmDialog(null, "要退出游戏吗？", "退出游戏", JOptionPane.YES_NO_OPTION);
+                    if (n == JOptionPane.YES_OPTION) {
+                        System.exit(0);
+                    }
+                    else
+                        flag[1]=2;
+                }
+
                 break;
 
 
