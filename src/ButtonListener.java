@@ -14,6 +14,8 @@ public class ButtonListener implements ActionListener,config {
     private void init() {
         flag[0]=0;
         flag[1]=1;
+        huiqi[0]=0;
+        huiqi[1]=0;
         location[0]=0;
         location[1]=0;
         for(int i=1;i<=19;i++)
@@ -48,13 +50,18 @@ public class ButtonListener implements ActionListener,config {
                     if ( location[0] == 0 && location[1] == 0) {
                         JOptionPane.showMessageDialog(null, "你还没有下棋", "警告", JOptionPane.WARNING_MESSAGE);
                     } else  if(location[0]==18&&location[1]==18) {
-                        JOptionPane.showMessageDialog(null,"你已经悔棋了，请重新下棋","警告",JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null,"只能撤销一步操作","警告",JOptionPane.WARNING_MESSAGE);
+                    }
+                    else if(huiqi[0]==(flag[0]==0?2:1)&&huiqi[1]==1) {
+                        JOptionPane.showMessageDialog(null,"只有一次悔棋机会");
                     }
                     else{
                         flag[0]=(flag[0]==1)?0:1;//切换选手
                         chess[location[0]][location[1]] = 0;
                         location[0]=18;
                         location[1]=18;
+                        huiqi[0]=flag[0]+1;
+                        huiqi[1]=0;
                         p.repaint();
                     }
                 }

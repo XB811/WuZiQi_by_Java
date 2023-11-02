@@ -92,7 +92,7 @@ public class PanelListener implements MouseListener,config {
             int ly=(e.getY()+20)/40;
             int cx=lx*40;
             int cy=ly*40;
-            if(Math.sqrt((e.getX()-cx)*(e.getX()-cx)+(e.getY()-cy)*(e.getY()-cy))>15)return;
+            if(Math.sqrt((e.getX()-cx)*(e.getX()-cx)+(e.getY()-cy)*(e.getY()-cy))>15)return;//判定范围以点圆心，半径15的圆
             if(chess[lx][ly]!=0)return;//同一个位置不能下棋
             location[0]=lx;
             location[1]=ly;
@@ -108,6 +108,7 @@ public class PanelListener implements MouseListener,config {
                 flag[1]=0;
                 JOptionPane.showMessageDialog(null,"棋盘已满，平局");
             }
+            if(huiqi[0]!=0)huiqi[1]++;
             flag[0]=(flag[0]==1)?0:1;
         }
 
