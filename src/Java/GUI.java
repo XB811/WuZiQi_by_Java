@@ -4,6 +4,8 @@ import java.awt.*;
 import javax.swing.*;
 import Listener.*;
 import java.lang.*;
+import java.text.DecimalFormat;
+
 public class GUI extends JFrame implements config {
     public GUI()
     {
@@ -29,6 +31,10 @@ public class GUI extends JFrame implements config {
         jta[1]=new JTextArea("");
         jta[0].setBounds(800,0,200,60);
         jta[1].setBounds(800,60,200,60);
+        jta[0].setFont(new Font("宋体", Font.BOLD, 18));
+        jta[1].setFont(new Font("宋体", Font.BOLD, 18));
+        jta[0].setEditable(false);
+        jta[1].setEditable(false);
         add(jta[0]);
         add(jta[1]);
 
@@ -75,7 +81,9 @@ public class GUI extends JFrame implements config {
                     last_flag[1]=0;
                 }
             }
-            time_string[1]="游戏时长："+ totaltime/60000+':'+totaltime/1000+':'+totaltime%1000;
+            DecimalFormat d1=new DecimalFormat("00");
+            DecimalFormat d2=new DecimalFormat("000");
+            time_string[1]="游戏时长："+ d1.format(totaltime/60000)+':'+d1.format(totaltime/1000)+':'+d2.format(totaltime%1000);
             jta[0].setText(time_string[1]);
             //System.out.println(time_string[1]+"\n");
 
