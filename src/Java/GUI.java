@@ -3,6 +3,7 @@ package Java;
 import java.awt.*;
 import javax.swing.*;
 import Listener.*;
+import java.lang.*;
 public class GUI extends JFrame implements config {
     public GUI()
     {
@@ -22,6 +23,14 @@ public class GUI extends JFrame implements config {
         panel.setBounds(800,0,200,800);
         JButton []jb=new JButton[6];
 
+        //计时器面板
+        JTextArea []jta=new JTextArea[2];
+        jta[0]=new JTextArea("");
+        jta[1]=new JTextArea("");
+        jta[0].setBounds(800,0,200,60);
+        jta[1].setBounds(800,60,200,60);
+        add(jta[0]);
+        add(jta[1]);
 
         for(int i=0;i<6;i++){
             jb[i]=new JButton(config.ButtonName[i]);
@@ -34,6 +43,43 @@ public class GUI extends JFrame implements config {
         add(panel);
         add(p);
         init();
+        jishi(jta);
+    }
+    private void jishi(JTextArea []jta){
+        int []last_flag=new int[2];//表示上次玩家和上次的是否开始游戏
+        last_flag[0]=0;
+        last_flag[1]=0;
+        long []last_time=new long[2];//记录上一次切换玩家和上一次开始游戏
+        long totaltime=0;
+        while(true){
+            if(last_flag[1]==flag[1])
+            {
+                if(flag[1]==1)//表示正在游戏
+                {
+                    totaltime=System.currentTimeMillis()-last_time[1];
+                }
+            }
+            else{
+                if(flag[1]==1)//表示开始游戏
+                {
+                    last_time[1]=System.currentTimeMillis();
+                    totaltime=System.currentTimeMillis()-last_time[1];
+                    last_flag[1]=1;
+                }
+                else if(flag[1]==2) {
+                    flag[1]=1;
+                    totaltime=System.currentTimeMillis()-last_time[1];
+                    last_flag[1]=1;
+                }
+                else{
+                    last_flag[1]=0;
+                }
+            }
+            time_string[1]="游戏时长："+ totaltime/60000+':'+totaltime/1000+':'+totaltime%1000;
+            jta[0].setText(time_string[1]);
+            //System.out.println(time_string[1]+"\n");
+
+        }
     }
     private void init()
     {
