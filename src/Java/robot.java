@@ -41,15 +41,11 @@ public class robot implements config {
 //		右
         if(count>=3)
         {
+            //				判断返回右边危险位置
             if(wz1 != null){
                 return wz1;
 //				判断返回左边危险位置
-            }else if(wz2 != null){
-                return wz2;
-//				判断返回右边危险位置
-            }else{
-                return null;
-            }
+            }else return wz2; //如果wz2也未空，返回wz2 即null
         }
 //		左右
         count = 1;
@@ -126,11 +122,7 @@ public class robot implements config {
         {
             if(wz1 != null){
                 return wz1;
-            }else if(wz2 != null){
-                return wz2;
-            }else{
-                return null;
-            }
+            }else return wz2;
         }
 //		左上右下
         count = 1;
