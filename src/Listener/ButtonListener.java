@@ -6,7 +6,6 @@ import Java.robot;
 import Java.about;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //按键监听
