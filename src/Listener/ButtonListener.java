@@ -63,21 +63,33 @@ public class ButtonListener implements ActionListener, config {
                 }
                 break;
             case "选择游戏模式":
-                if(flag[1]==1)JOptionPane.showMessageDialog(null,"正在下棋，请勿更改游戏模式","警告",JOptionPane.WARNING_MESSAGE);
+                if(flag[1]==1){
+                    flag[1]=0;
+                    JOptionPane.showMessageDialog(null,"正在下棋，请勿更改游戏模式","警告",JOptionPane.WARNING_MESSAGE);
+                    flag[1]=2;
+                }
                 else {
                     flag[2] = 1;
                     bu.setText("双人模式");
                 }
                 break;
             case "双人模式":
-                if(flag[1]==1)JOptionPane.showMessageDialog(null,"正在下棋，请勿更改游戏模式","警告",JOptionPane.WARNING_MESSAGE);
+                if(flag[1]==1){
+                    flag[1]=0;
+                    JOptionPane.showMessageDialog(null,"正在下棋，请勿更改游戏模式","警告",JOptionPane.WARNING_MESSAGE);
+                    flag[1]=2;
+                }
                 else {
                     bu.setText("人机模式");
                     flag[2] = 2;
                 }
                 break;
             case "人机模式":
-                if(flag[1]==1)JOptionPane.showMessageDialog(null,"正在下棋，请勿更改游戏模式","警告",JOptionPane.WARNING_MESSAGE);
+                if(flag[1]==1){
+                    flag[1]=0;
+                    JOptionPane.showMessageDialog(null,"正在下棋，请勿更改游戏模式","警告",JOptionPane.WARNING_MESSAGE);
+                    flag[1]=2;
+                }
                 else {
                     bu.setText("联网模式");
                     flag[2] = 3;
@@ -85,15 +97,18 @@ public class ButtonListener implements ActionListener, config {
                 }
                 break;
             case "联网模式"://联网模式还没做，可能后面这一部分会挪走
-                if(flag[1]==1)JOptionPane.showMessageDialog(null,"正在下棋，请勿更改游戏模式","警告",JOptionPane.WARNING_MESSAGE);
+                if(flag[1]==1){
+                    flag[1]=0;
+                    JOptionPane.showMessageDialog(null,"正在下棋，请勿更改游戏模式","警告",JOptionPane.WARNING_MESSAGE);
+                    flag[1]=2;
+                }
                 else {
                     bu.setText("选择游戏模式");
                     flag[2] = 0;
                 }
             case"悔棋":
-                //前提必须是已经开始游戏且为模式1，确认后模式2会电脑自动操作，无法悔棋、
-                //必须无未确认棋子
-                if(flag[1]==1&&flag[2]==1&&flag[3]==0) {
+                //前提必须是已经开始游戏且为模式1，模式2确认后会电脑自动操作，无法悔棋
+                if(flag[1]==1&&flag[2]==1&&flag[3]==0) {//无未确认棋子
                     if ( location[0] == 0 && location[1] == 0) {
                         flag[1]=0;
                         JOptionPane.showMessageDialog(null, "你还没有下棋", "警告", JOptionPane.WARNING_MESSAGE);
@@ -125,7 +140,7 @@ public class ButtonListener implements ActionListener, config {
                 }
                 break;
             case "确认棋位":
-                if(flag[3]==0){
+                if(flag[1]==1&&flag[3]==0){
                     flag[1]=0;
                     JOptionPane.showMessageDialog(null,"你还未放棋");
                     flag[1]=2;

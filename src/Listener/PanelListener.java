@@ -105,7 +105,9 @@ public class PanelListener implements MouseListener, config {
                 return;
             }
             if(flag[3]==1){
+                flag[1]=0;
                 JOptionPane.showMessageDialog(null,"你已经放过棋子了，请先确认，确认前可再次点击棋子撤销，重新放棋");
+                flag[1]=2;
                 return;//已经放棋，不能再放棋子
             }
             if(chess[lx][ly]!=0)return;//同一个位置判断是否放过棋子
